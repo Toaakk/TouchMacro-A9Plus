@@ -4,7 +4,7 @@
         <item name="android:statusBarColor">@color/slate_900</item>
         <item name="android:navigationBarColor">@color/slate_900</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="colorPrimary">@color/primary_cyan</color>
-        <item name="colorSecondary">@color/accent_emerald</color>
+        <item name="colorPrimary">@color/primary_cyan</item>
+        <item name="colorSecondary">@color/accent_emerald</item>
     </style>
 </resources>
