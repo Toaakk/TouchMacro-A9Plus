@@ -46,7 +46,7 @@ fun HomeScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Row(verticalAlignment = Alignment.CenterVertizontally) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("Touch Macro", fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.width(8.dp))
                         Badge(containerColor = MaterialTheme.colorScheme.primaryContainer) {
@@ -165,11 +165,11 @@ fun MacroItemCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertizontally,
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Row(verticalAlignment = Alignment.CenterVertizontally) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = macro.name,
                         style = MaterialTheme.typography.titleMedium,
@@ -197,7 +197,7 @@ fun MacroItemCard(
                 )
             }
 
-            Row(verticalAlignment = Alignment.CenterVertizontally) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 // Yüzen Panel Başlat Butonu
                 FilledTonalButton(
                     onClick = onStartOverlay,

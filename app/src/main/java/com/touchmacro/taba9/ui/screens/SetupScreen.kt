@@ -130,7 +130,7 @@ fun PermissionCard(
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Row(
-                verticalAlignment = Alignment.CenterVertizontally,
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {

@@ -121,10 +121,10 @@ fun EditorScreen(
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertizontally,
+                        verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertizontally) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             Text("Tekrar Sayısı:")
                             Spacer(modifier = Modifier.width(8.dp))
                             FilterChip(
@@ -147,7 +147,7 @@ fun EditorScreen(
                         }
 
                         // Ekran Yönü Uyarısı / Güvenlik
-                        Row(verticalAlignment = Alignment.CenterVertizontally) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             Checkbox(
                                 checked = currentMacro.stopOnOrientationChange,
                                 onCheckedChange = { currentMacro = currentMacro.copy(stopOnOrientationChange = it) }
@@ -164,7 +164,7 @@ fun EditorScreen(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertizontally
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "Makro Adımları (${currentMacro.steps.size})",
@@ -267,7 +267,7 @@ fun StepItemRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertizontally
+            verticalAlignment = Alignment.CenterVertically
         ) {
             // Adım Sıra Numarası Rozeti
             Surface(

@@ -167,15 +167,15 @@ class MacroEngine(
         )
 
         try {
-            while (isActive && (totalLoops == 0 || currentLoop < totalLoops)) {
+            while (currentCoroutineContext().isActive && (totalLoops == 0 || currentLoop < totalLoops)) {
                 currentLoop++
                 _progress.value = _progress.value.copy(currentLoop = currentLoop)
 
                 for ((index, step) in macro.steps.withIndex()) {
-                    ensureActive()
+                    currentCoroutineContext().ensureActive()
 
                     // Duraklatma kontrolü
-                    while (isPaused && isActive) {
+                    while (isPaused && currentCoroutineContext().isActive) {
                         delay(100)
                     }
 
@@ -194,7 +194,7 @@ class MacroEngine(
                 }
             }
 
-            if (isActive) {
+            if (currentCoroutineContext().isActive) {
                 _progress.value = _progress.value.copy(
                     status = EngineStatus.COMPLETED,
                     currentStepDescription = "Başarıyla tamamlandı ($currentLoop tekrar yapıldı)"
