@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Samsung Galaxy Tab A9+ Tema Renkleri (OneUI Slate & Cyan) -->
+    <color name="primary_cyan">#0284C7</color>
+    <color name="primary_cyan_light">#38BDF8</color>
+    <color name="primary_cyan_dark">#0369A1</color>
+    
+    <color name="accent_emerald">#10B981</color>
+    <color name="warning_amber">#F59E0B</color>
+    <color name="error_rose">#EF4444</color>
+    
+    <color name="slate_950">#020617</color>
+    <color name="slate_900">#0F172A</color>
+    <color name="slate_850">#172033</color>
+    <color name="slate_800">#1E293B</color>
+    <color name="slate_700">#334155</color>
+    <color name="slate_400">#94A3B8</color>
+    
+    <color name="white">#FFFFFF</color>
+    <color name="overlay_panel_bg">#EE1E293B</color>
+    <color name="overlay_picker_scrim">#33000000</color>
+</resources>

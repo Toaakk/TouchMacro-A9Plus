@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Touch Macro</string>
+    <string name="accessibility_service_name">Touch Macro Hizmeti (Tab A9+)</string>
+    <string name="accessibility_service_description">Touch Macro uygulaması, oyunlarda ve uygulamalarda belirlediğiniz dokunma, basılı tutma, kaydırma ve bekleme adımlarını otomatik olarak gerçekleştirmek için ekran hareketlerini (dispatchGesture) kullanır. Root, ADB veya Shizuku gerektirmez. Hiçbir kişisel veri toplanmaz veya aktarılmaz.</string>
+    
+    <string name="perm_accessibility_title">1. Erişilebilirlik Hizmeti (Zorunlu)</string>
+    <string name="perm_accessibility_desc">Ekrana dokunma (tap), basılı tutma ve kaydırma (dispatchGesture) hareketlerini donanım düzeyinde göndermek için gereklidir.</string>
+    
+    <string name="perm_overlay_title">2. Diğer Uygulamaların Üzerinde Gösterim</string>
+    <string name="perm_overlay_desc">Oyun açıkken ekran üzerinde hareket ettirilebilir Yüzen Kontrol Panelini ve koordinat seçiciyi göstermek için gereklidir.</string>
+    
+    <string name="hud_status_ready">HAZIR</string>
+    <string name="hud_status_running">ÇALIŞIYOR</string>
+    <string name="hud_status_paused">DURAKLATILDI</string>
+    <string name="hud_status_stopped">DURDURULDU</string>
+    <string name="hud_status_error">HATA</string>
+    <string name="hud_btn_start">▶ Başlat</string>
+    <string name="hud_btn_pause">⏸ Duraklat</string>
+    <string name="hud_btn_resume">▶ Devam</string>
+    <string name="hud_btn_stop">⏹ Durdur</string>
+    
+    <string name="error_gesture_failed">Dokunma işlemi başarısız oldu! Ekran meşgul veya kilitli olabilir.</string>
+    <string name="error_orientation_stopped">Güvenlik: Ekran yönü değiştiği için makro durduruldu.</string>
+</resources>
