@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <accessibility-service
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,7 +7,7 @@
     android:accessibilityFlags="flagDefault"
     android:accessibilityFeedbackType="feedbackGeneric"
     android:notificationTimeout="100"
-    android:canPerformGestures="true"
+    android:canRetrieveWindowContent="true"
     android:canRetrieveWindowContent="false"
     android:canRequestFilterKeyEvents="false"
     android:settingsActivity="com.touchmacro.taba9.ui.MainActivity" />
