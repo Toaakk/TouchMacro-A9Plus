@@ -220,8 +220,7 @@ class MacroEngine(
         }
 
         when (step.type) {
-            StepType.WAIT -> {
-                delay(step.delayAfterMs.coerceAtLeast(10L))
+            StepType.WAIT -> {delay(step.durationMs.coerceAtLeast(10L))}
             }
             StepType.TAP, StepType.LONG_PRESS, StepType.RELEASE -> {
                 performTapOrHold(service, step, macroOrientation)
