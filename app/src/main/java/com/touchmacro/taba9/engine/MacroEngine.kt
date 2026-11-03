@@ -321,7 +321,7 @@ class MacroEngine(
             }
         }
 
-        val dispatched = service.dispatchGesture(gesture, callback, null)
+        val dispatched = withContext(Dispatchers.Main.immediate) {service.dispatchGesture(gesture, callback, null)}
         if (!dispatched) {
             Log.e(TAG, "dispatchGesture çağrısı sistem tarafından reddedildi.")
             return false
