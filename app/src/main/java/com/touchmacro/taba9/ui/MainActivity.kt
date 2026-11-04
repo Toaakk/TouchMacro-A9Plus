@@ -3,8 +3,6 @@ package com.touchmacro.taba9.ui
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.accessibility.AccessibilityManager
@@ -16,9 +14,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -41,40 +39,51 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    var isAccessibilityEnabled by remember { mutableStateOf(checkAccessibilityPermission()) }
-                    var isOverlayEnabled by remember { mutableStateOf(checkOverlayPermission()) }
 
-                    // Uygulama Ayarlardan geri döndüğünde izinleri otomatik güncelle
+                    var isAccessibilityEnabled by remember {
+                        mutableStateOf(checkAccessibilityPermission())
+                    }
+
                     val lifecycleOwner = LocalLifecycleOwner.current
+
                     DisposableEffect(lifecycleOwner) {
                         val observer = LifecycleEventObserver { _, event ->
                             if (event == Lifecycle.Event.ON_RESUME) {
                                 isAccessibilityEnabled = checkAccessibilityPermission()
-                                isOverlayEnabled = checkOverlayPermission()
                             }
                         }
+
                         lifecycleOwner.lifecycle.addObserver(observer)
+
                         onDispose {
                             lifecycleOwner.lifecycle.removeObserver(observer)
                         }
                     }
 
-                    val startDestination = if (isAccessibilityEnabled) "home" else "setup"
+                    val startDestination =
+                        if (isAccessibilityEnabled) "home" else "setup"
 
-                    NavHost(navController = navController, startDestination = startDestination) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = startDestination
+                    ) {
                         composable("setup") {
                             SetupScreen(
                                 isAccessibilityEnabled = isAccessibilityEnabled,
-                                isOverlayEnabled = isOverlayEnabled,
-                                onOpenAccessibilitySettings = { openAccessibilitySettings() },
-                                onOpenOverlaySettings = { openOverlaySettings() },
+                                isOverlayEnabled = false,
+                                onOpenAccessibilitySettings = {
+                                    openAccessibilitySettings()
+                                },
+                                onOpenOverlaySettings = {},
                                 onRefreshPermissions = {
-                                    isAccessibilityEnabled = checkAccessibilityPermission()
-                                    isOverlayEnabled = checkOverlayPermission()
+                                    isAccessibilityEnabled =
+                                        checkAccessibilityPermission()
                                 },
                                 onProceedToHome = {
                                     navController.navigate("home") {
-                                        popUpTo("setup") { inclusive = true }
+                                        popUpTo("setup") {
+                                            inclusive = true
+                                        }
                                     }
                                 }
                             )
@@ -84,18 +93,35 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(
                                 database = TouchMacroApp.instance.database,
                                 onNavigateToEditor = { macroId ->
-                                    navController.navigate("editor?macroId=$macroId")
+                                    navController.navigate(
+                                        "editor?macroId=$macroId"
+                                    )
                                 },
                                 onNavigateToSetup = {
                                     navController.navigate("setup")
                                 },
                                 onStartFloatingHud = { macro ->
-                                    val service = TouchMacroAccessibilityService.instance
-                                    if (service != null && TouchMacroAccessibilityService.isServiceRunning) {
+                                    val service =
+                                        TouchMacroAccessibilityService.instance
+
+                                    if (
+                                        service != null &&
+                                        TouchMacroAccessibilityService.isServiceRunning
+                                    ) {
                                         service.showFloatingControls(macro)
-                                        Toast.makeText(this@MainActivity, "Yüzen kontrol paneli açıldı. Oyununuza geçebilirsiniz.", Toast.LENGTH_SHORT).show()
+
+                                        Toast.makeText(
+                                            this@MainActivity,
+                                            "Yüzen kontrol paneli açıldı. Oyununuza geçebilirsiniz.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     } else {
-                                        Toast.makeText(this@MainActivity, "Lütfen önce Erişilebilirlik Hizmetini etkinleştirin.", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(
+                                            this@MainActivity,
+                                            "Lütfen önce Erişilebilirlik Hizmetini etkinleştirin.",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
                                         openAccessibilitySettings()
                                     }
                                 }
@@ -103,19 +129,32 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("editor?macroId={macroId}") { backStackEntry ->
-                            val macroId = backStackEntry.arguments?.getString("macroId")?.toLongOrNull() ?: 0L
+                            val macroId =
+                                backStackEntry.arguments
+                                    ?.getString("macroId")
+                                    ?.toLongOrNull() ?: 0L
+
                             EditorScreen(
                                 macroId = macroId,
                                 database = TouchMacroApp.instance.database,
-                                onNavigateBack = { navController.popBackStack() },
+                                onNavigateBack = {
+                                    navController.popBackStack()
+                                },
                                 onLaunchPointPicker = { callback ->
-                                    val service = TouchMacroAccessibilityService.instance
+                                    val service =
+                                        TouchMacroAccessibilityService.instance
+
                                     if (service != null) {
                                         service.startPointPicker { x, y ->
                                             callback(x, y)
                                         }
                                     } else {
-                                        Toast.makeText(this@MainActivity, "Nokta seçici için Erişilebilirlik Hizmeti açık olmalıdır.", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(
+                                            this@MainActivity,
+                                            "Nokta seçici için Erişilebilirlik Hizmeti açık olmalıdır.",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
                                         openAccessibilitySettings()
                                     }
                                 }
@@ -128,49 +167,48 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun checkAccessibilityPermission(): Boolean {
-        val am = getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-        val enabledServices = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK)
-        val expectedServiceName = "${packageName}/${TouchMacroAccessibilityService::class.java.canonicalName}"
-        val expectedShortName = "${packageName}/.service.TouchMacroAccessibilityService"
+        val am = getSystemService(
+            Context.ACCESSIBILITY_SERVICE
+        ) as AccessibilityManager
+
+        val enabledServices =
+            am.getEnabledAccessibilityServiceList(
+                AccessibilityServiceInfo.FEEDBACK_ALL_MASK
+            )
+
+        val expectedServiceName =
+            "${packageName}/${TouchMacroAccessibilityService::class.java.canonicalName}"
+
+        val expectedShortName =
+            "${packageName}/.service.TouchMacroAccessibilityService"
 
         for (service in enabledServices) {
             val id = service.id
-            if (id.equals(expectedServiceName, ignoreCase = true) || id.equals(expectedShortName, ignoreCase = true)) {
+
+            if (
+                id.equals(expectedServiceName, ignoreCase = true) ||
+                id.equals(expectedShortName, ignoreCase = true)
+            ) {
                 return true
             }
         }
-        return false
-    }
 
-    private fun checkOverlayPermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Settings.canDrawOverlays(this)
-        } else {
-            true
-        }
+        return false
     }
 
     private fun openAccessibilitySettings() {
         try {
-            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            val intent = Intent(
+                Settings.ACTION_ACCESSIBILITY_SETTINGS
+            )
+
             startActivity(intent)
         } catch (e: Exception) {
-            Toast.makeText(this, "Ayarlar açılamadı", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun openOverlaySettings() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            try {
-                val intent = Intent(
-                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:$packageName")
-                )
-                startActivity(intent)
-            } catch (e: Exception) {
-                val fallbackIntent = Intent(Settings.ACTION_SETTINGS)
-                startActivity(fallbackIntent)
-            }
+            Toast.makeText(
+                this,
+                "Ayarlar açılamadı",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
