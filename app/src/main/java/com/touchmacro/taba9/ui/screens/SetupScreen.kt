@@ -78,18 +78,6 @@ fun SetupScreen(
                 actionButtonText = if (isAccessibilityEnabled) "Etkinleştirildi" else "Erişilebilirlik Ayarlarını Aç",
                 onActionClick = onOpenAccessibilitySettings
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // İzin 2: Diğer Uygulamaların Üzerinde Gösterim
-            PermissionCard(
-                title = "2. Üstte Gösterim / Yüzen Panel (Önerilen)",
-                description = "Oyun oynarken ekranın üzerinde küçük Başlat/Duraklat/Durdur kontrol panelini ve dokunma noktası seçiciyi görebilmek için gereklidir.",
-                isGranted = isOverlayEnabled,
-                actionButtonText = if (isOverlayEnabled) "İzin Verildi" else "Üstte Gösterim İznini Aç",
-                onActionClick = onOpenOverlaySettings
-            )
-
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
